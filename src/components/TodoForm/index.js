@@ -5,7 +5,7 @@ import shortid from 'shortid';
 class TodoForm extends Component {
 
     state = {
-        text: ""
+      text: ""
     };
 
     handleChange = (event) => {
@@ -19,8 +19,9 @@ class TodoForm extends Component {
         this.props.onSubmit({
             id: shortid.generate(),
             text: this.state.text,
-            complete: false
-        }); 
+            complete: false,
+            children: []
+        });
         this.setState({
             text: ""
         });
@@ -30,15 +31,16 @@ class TodoForm extends Component {
         return (
 
             <div className="todoForm">
+                <h1>Errand List</h1>
                 <form onSubmit={this.handleSubmit}>
+                    <button className="addTask">+</button>
                     <input
                         name="text"
                         value={this.state.text}
                         onChange={this.handleChange}
-                        placeholder="Task Name">
+                        placeholder="Add Task">
                     </input>
 
-                <button onSubmit={this.handleSubmit} className="saveButton">Add Task</button>
                 </form>
             </div>
         )

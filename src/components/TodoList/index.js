@@ -13,7 +13,15 @@ class TodoList extends Component {
         this.setState(state => ({
             todos: [todo, ...state.todos]
         }));
+        console.log("Hey", this.state)
     };
+
+    addChild = () => {
+        console.log("Why do I suck")
+        return(
+        <div></div>
+        )
+            }
 
     toggleComplete = (id) => {
         this.setState({
@@ -41,10 +49,12 @@ class TodoList extends Component {
                 key={todo.id} 
                 toggleComplete={() => this.toggleComplete(todo.id)} 
                 todo={todo}
+                addChild={this.addChild}
+
                 />
                 ))}
-            </div>
-        );
+               </div>
+               );
     }
 }
 

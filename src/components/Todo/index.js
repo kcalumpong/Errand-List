@@ -3,6 +3,7 @@ import './style.css';
 
 const Todo = (props) => {
     return (
+        // <div>
         <div
             id={props.todo.id}
             style={{
@@ -10,15 +11,17 @@ const Todo = (props) => {
                 textDecoration: props.todo.complete ? "line-through" : "",
                 borderBottom: "solid .8px grey",
                 padding: "10px"
-
             }}
-            >
+        >
+
             <input
-                className='checkbox-color'
+                className='form-checkbox'
                 type="checkbox"
                 onClick={props.toggleComplete} />
             {props.todo.text}
-        </div>
+
+            <button className="addChild" onClick={props.addChild}>+</button>
+            </div>
     )
 }
 
