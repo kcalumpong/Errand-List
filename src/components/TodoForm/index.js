@@ -5,7 +5,7 @@ import shortid from 'shortid';
 class TodoForm extends Component {
 
     state = {
-      text: ""
+        text: ""
     };
 
     handleChange = (event) => {
@@ -29,7 +29,6 @@ class TodoForm extends Component {
 
     render() {
         return (
-
             <div className="todoForm">
                 <h1>Errand List</h1>
                 <form onSubmit={this.handleSubmit}>
@@ -40,13 +39,10 @@ class TodoForm extends Component {
                         onChange={this.handleChange}
                         placeholder="Add Task">
                     </input>
-
                 </form>
             </div>
         )
     }
-
 }
-
 
 export default TodoForm;

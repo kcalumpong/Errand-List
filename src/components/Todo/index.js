@@ -3,25 +3,33 @@ import './style.css';
 
 const Todo = (props) => {
     return (
-        // <div>
-        <div
-            id={props.todo.id}
+        <li
             style={{
-                width: "500px",
-                textDecoration: props.todo.complete ? "line-through" : "",
-                borderBottom: "solid .8px grey",
-                padding: "10px"
+                textDecoration: props.todo.complete ? "line-through" : ""
             }}
         >
-
             <input
                 className='form-checkbox'
                 type="checkbox"
-                onClick={props.toggleComplete} />
+                onClick={props.parentComplete} />
             {props.todo.text}
-
             <button className="addChild" onClick={props.addChild}>+</button>
-            </div>
+            <ul>
+                {props.todo.children.map(child => (
+                    <li
+                        style={{
+                            textDecoration: child.complete ? "line-through" : ""
+                        }}
+                    >
+                        <input
+                            className='form-checkbox'
+                            type="checkbox"
+                            onClick={props.childComplete} />
+                        {child.text}
+                    </li>
+                ))}
+            </ul>
+        </li>
     )
 }
 
