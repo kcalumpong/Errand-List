@@ -67,6 +67,7 @@ ul {
   margin-right: 10px;
 }
 
-.checkbox:checked + span { 
-  text-decoration:line-through
+.checkbox:checked { 
+  text-decoration:line-through;
+  color: rgb(109, 109, 32);
 }

@@ -48,6 +48,7 @@ class Todo extends Component {
     }
 
     taskCompleted = (complete, id, index) => {
+
         const todoItems = {
             id: id,
             value: this.input.current.value,
@@ -93,23 +94,33 @@ class Todo extends Component {
     }
 
     render() {
+        const divStyle = {
+            textDecoration: this.state.complete ? "line-through" : "", 
+            color: "blue",
+        };
+
         return (
             <div className="main-container">
                 <h1>Errand List</h1>
                 <div className="todo-container">
-                    {/* {console.log(this.state)} */}
                     <form onSubmit={this.handleSubmit} ref="form">
                         <button onClick={this.addTodo} className="add-button" >+</button>
                         <input className="input-box" type="text" placeholder="Add Task" ref={this.input}></input>
                     </form>
                     <div>
+
+
                         {this.state.todos.map((item, index) => {
                             return (
                                 <div
                                     className="items" key={item.id}>
 
-                                    <input type="checkbox" className="checkbox" checked={this.state.complete} onClick={event => this.taskCompleted(event.target.complete, item.id, index)}></input>
-                                    <input className="current-value" name="text" onBlur={event => this.updateTodo(event.target.value, item.id, index)} defaultValue={item.value}></input>
+
+                                    <input type="checkbox" id="checked" className="checkbox" onClick={() => this.taskCompleted(item.complete, item.id, index)}></input>
+
+
+                                    <input for="checked" style={divStyle} className="current-value" name="text" onBlur={event => this.updateTodo(event.target.value, item.id, index)} defaultValue={item.value} />
+
 
                                     <button onClick={this.deleteTodo} className="delete-button" value="delete" data-key={index}>X</button>
                                 </div>
