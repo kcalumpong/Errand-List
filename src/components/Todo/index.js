@@ -28,13 +28,13 @@ class Todo extends Component {
         const todoItems = {
             id: shortid.generate(),
             value: this.input.current.value,
-            complete: false
+            complete: false,
+            children: []
         };
 
         if (localStorage.getItem("todos") === null) {
             const todos = []
             todos.push(todoItems);
-            console.log(todos)
             localStorage.setItem("todos", JSON.stringify(todos))
         } else {
             const todos = JSON.parse(localStorage.getItem("todos"))
@@ -50,7 +50,8 @@ class Todo extends Component {
         const todoItems = {
             id: id,
             value: value,
-            complete: !complete
+            complete: !complete,
+            children: []
         };
         console.log(todoItems)
 
@@ -69,7 +70,8 @@ class Todo extends Component {
         const todoItems = {
             id: id,
             value: updatedTodo,
-            complete: false
+            complete: false,
+            children: []
         };
 
         const todos = JSON.parse(localStorage.getItem("todos"))
@@ -80,6 +82,45 @@ class Todo extends Component {
             todos: JSON.parse(localStorage.getItem("todos"))
         })
     };
+
+    addChild = (id, value, complete) => {
+
+    //     {this.state.todos.map((item, index) => {
+    //         return (
+    //             <div>{item.id}</div>
+    //         )
+    //     })
+    //    }
+
+
+        const childList = {
+            id: id,
+            value: value,
+            complete: complete,
+            children: [
+                {
+                    id: shortid.generate(),
+                    value: this.input.current.value,
+                    complete: false,
+                }
+            ]
+        }
+        console.log(childList)
+
+        if (localStorage.getItem("children") === null) {
+            const children = []
+            children.push(childList);
+            console.log(children)
+            localStorage.setItem("children", JSON.stringify(children))
+        } else {
+            const children = JSON.parse(localStorage.getItem("todos"))
+            children.push(childList)
+            localStorage.setItem("children", JSON.stringify(children))
+        }
+        this.setState({
+            todos: JSON.parse(localStorage.getItem("children")),
+        })
+    }
 
     deleteTodo = (event) => {
         let index = event.target.getAttribute("data-key")
@@ -108,14 +149,28 @@ class Todo extends Component {
                             return (
                                 <div
                                     className="items" key={item.id}>
-
-
                                     <input type="checkbox" id="checked" checked={item.complete} className="checkbox" onClick={() => this.taskCompleted(item.complete, item.id, index, item.value)}></input>
+                                    <input style={{ textDecoration: item.complete ? "line-through" : "" }} className="current-value" name="text" id={item.id} onBlur={event => this.updateTodo(event.target.value, item.id, index)} defaultValue={item.value} />
+
+                                    {/*  */}
+                                    <button onClick={() => this.addChild()} className="child-button">+</button>
+
+                                    {this.state.todos.map((child, index) => {
+                                        return (
+                                            <div className="child" key={child.id}>
+                                            <p>{child.children.id}</p>
+                                                {/* <input type="checkbox"></input> */}
+                                                <input placeholder="add child task" data-key={index}></input>
+                                            </div>
+                                        )
+                                    }
+                                    )}
 
 
-                                    <input style={{textDecoration: item.complete ? "line-through" : ""}} className="current-value" name="text" onBlur={event => this.updateTodo(event.target.value, item.id, index)} defaultValue={item.value} />
+                                    {/*  */}
 
-                                    <button onClick={this.deleteTodo} className="delete-button" value="delete" data-key={index}>X</button>
+                                    <button onClick={this.deleteTodo} className="delete-button" value="delete" data-key={index}>DELETE</button>
+
                                 </div>
                             )
                         })

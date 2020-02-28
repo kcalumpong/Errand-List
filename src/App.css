@@ -51,6 +51,14 @@ ul {
   font-size: 14px;
 }
 
+.child-button {
+  border: none;
+  position: absolute;
+  left: 298px;
+  color: rgb(36, 32, 32);
+  font-size: 14px;
+}
+
 .svg-inline--fa {
   height: 2em;
 }
