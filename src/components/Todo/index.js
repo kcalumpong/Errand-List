@@ -46,10 +46,10 @@ class Todo extends Component {
         })
     }
 
-    taskCompleted = (complete, id, index) => {
+    taskCompleted = (complete, id, index, value) => {
         const todoItems = {
             id: id,
-            value: this.input.current.value,
+            value: value,
             complete: !complete
         };
         console.log(todoItems)
@@ -110,11 +110,10 @@ class Todo extends Component {
                                     className="items" key={item.id}>
 
 
-                                    <input type="checkbox" id="checked" className="checkbox" onClick={() => this.taskCompleted(item.complete, item.id, index)}></input>
+                                    <input type="checkbox" id="checked" checked={item.complete} className="checkbox" onClick={() => this.taskCompleted(item.complete, item.id, index, item.value)}></input>
 
 
-                                    <input for="checked" style={{textDecoration: item.complete ? "line-through" : ""}} className="current-value" name="text" onBlur={event => this.updateTodo(event.target.value, item.id, index)} defaultValue={item.value} />
-
+                                    <input style={{textDecoration: item.complete ? "line-through" : ""}} className="current-value" name="text" onBlur={event => this.updateTodo(event.target.value, item.id, index)} defaultValue={item.value} />
 
                                     <button onClick={this.deleteTodo} className="delete-button" value="delete" data-key={index}>X</button>
                                 </div>
