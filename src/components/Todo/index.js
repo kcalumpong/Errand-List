@@ -25,10 +25,7 @@ class Todo extends Component {
         this.refs.form.reset();
     }
 
-
-    addTodo = (event) => {
-        console.log(this.state.todos);
-
+    addTodo = () => {
         const todoItems = {
             id: shortid.generate(),
             value: this.input.current.value,
@@ -38,6 +35,7 @@ class Todo extends Component {
         if (localStorage.getItem("todos") === null) {
             const todos = []
             todos.push(todoItems);
+            console.log(todos)
             localStorage.setItem("todos", JSON.stringify(todos))
         } else {
             const todos = JSON.parse(localStorage.getItem("todos"))
@@ -49,31 +47,40 @@ class Todo extends Component {
         })
     }
 
-    updateTodo = (event) => {
-        console.log(event)
-        let updatedTodo = event
-
+    taskCompleted = (complete, id, index) => {
         const todoItems = {
-            id: shortid.generate(),
-            value: updatedTodo,
-            complete: false
+            id: id,
+            value: this.input.current.value,
+            complete: !complete
         };
+        console.log(todoItems)
 
-        if (localStorage.getItem("todos") !== null) {
-            const todos = []
-            todos.push(todoItems);
-            localStorage.setItem("todos", JSON.stringify(todos))
-        } else {
-            const todos = JSON.parse(localStorage.getItem("todos"))
-            todos.push(updatedTodo, todoItems)
-            localStorage.setItem("todos", JSON.stringify(todos))
-        }
+        const todos = JSON.parse(localStorage.getItem("todos"))
+        todos.splice(index, 1, todoItems)
+        localStorage.setItem("todos", JSON.stringify(todos))
+
         this.setState({
             todos: JSON.parse(localStorage.getItem("todos"))
         })
     };
 
+    updateTodo = (event, id, index) => {
+        let updatedTodo = event
 
+        const todoItems = {
+            id: id,
+            value: updatedTodo,
+            complete: false
+        };
+
+        const todos = JSON.parse(localStorage.getItem("todos"))
+        todos.splice(index, 1, todoItems)
+        localStorage.setItem("todos", JSON.stringify(todos))
+
+        this.setState({
+            todos: JSON.parse(localStorage.getItem("todos"))
+        })
+    };
 
     deleteTodo = (event) => {
         let index = event.target.getAttribute("data-key")
@@ -85,14 +92,12 @@ class Todo extends Component {
         localStorage.setItem("todos", JSON.stringify(todoValue))
     }
 
-
-
     render() {
         return (
             <div className="main-container">
                 <h1>Errand List</h1>
                 <div className="todo-container">
-                    {console.log(this.state)}
+                    {/* {console.log(this.state)} */}
                     <form onSubmit={this.handleSubmit} ref="form">
                         <button onClick={this.addTodo} className="add-button" >+</button>
                         <input className="input-box" type="text" placeholder="Add Task" ref={this.input}></input>
@@ -103,9 +108,8 @@ class Todo extends Component {
                                 <div
                                     className="items" key={item.id}>
 
-                                    <input type="checkbox" className="checkbox" checked={this.state.complete} onChange={this.toggleComplete}></input>
-                                    <input className="current-value" name="text" onBlur={event => this.updateTodo(event.target.value, item.key)} defaultValue={item.value}></input>
-
+                                    <input type="checkbox" className="checkbox" checked={this.state.complete} onClick={event => this.taskCompleted(event.target.complete, item.id, index)}></input>
+                                    <input className="current-value" name="text" onBlur={event => this.updateTodo(event.target.value, item.id, index)} defaultValue={item.value}></input>
 
                                     <button onClick={this.deleteTodo} className="delete-button" value="delete" data-key={index}>X</button>
                                 </div>
