@@ -4,12 +4,12 @@ import shortid from 'shortid';
 class Todo extends Component {
 
     input = React.createRef()
-    
+
     state = {
         todos: [],
     }
-    
-    
+
+
     componentDidMount() {
         const todos = window.localStorage.getItem("todos");
         const parsedList = JSON.parse(todos);
@@ -20,8 +20,15 @@ class Todo extends Component {
         }
     }
 
-    addTodo = () => {
+    handleSubmit = (event) => {
+        event.preventDefault();
+        this.refs.form.reset();
+    }
+
+
+    addTodo = (event) => {
         console.log(this.state.todos);
+
         const todoItems = {
             id: shortid.generate(),
             value: this.input.current.value,
@@ -38,38 +45,36 @@ class Todo extends Component {
             localStorage.setItem("todos", JSON.stringify(todos))
         }
         this.setState({
-            todos: JSON.parse(localStorage.getItem("todos"))
+            todos: JSON.parse(localStorage.getItem("todos")),
         })
-
     }
 
     updateTodo = (event) => {
+        console.log(event)
         let updatedTodo = event
-         
+
         const todoItems = {
-             id: shortid.generate(),
-             value: updatedTodo,
-             complete: false
-         };
- 
-         if (localStorage.getItem("todos") === null) {
-             const todos = []
-             todos.push(todoItems);
-             localStorage.setItem("todos", JSON.stringify(todos))
-         } else {
-             const todos = JSON.parse(localStorage.getItem("todos"))
-             todos.push(updatedTodo, todoItems)
-             localStorage.setItem("todos", JSON.stringify(todos))
-         }
-         this.setState({
-             todos: JSON.parse(localStorage.getItem("todos"))
-         })
-     };
+            id: shortid.generate(),
+            value: updatedTodo,
+            complete: false
+        };
 
- 
+        if (localStorage.getItem("todos") !== null) {
+            const todos = []
+            todos.push(todoItems);
+            localStorage.setItem("todos", JSON.stringify(todos))
+        } else {
+            const todos = JSON.parse(localStorage.getItem("todos"))
+            todos.push(updatedTodo, todoItems)
+            localStorage.setItem("todos", JSON.stringify(todos))
+        }
+        this.setState({
+            todos: JSON.parse(localStorage.getItem("todos"))
+        })
+    };
 
 
-   
+
     deleteTodo = (event) => {
         let index = event.target.getAttribute("data-key")
         let todoValue = JSON.parse(localStorage.getItem("todos"));
@@ -88,17 +93,18 @@ class Todo extends Component {
                 <h1>Errand List</h1>
                 <div className="todo-container">
                     {console.log(this.state)}
-                    <button onClick={this.addTodo} className="add-button" >+</button>
-                    <input className="input-box" type="text" placeholder="Add Task" ref={this.input}></input>
+                    <form onSubmit={this.handleSubmit} ref="form">
+                        <button onClick={this.addTodo} className="add-button" >+</button>
+                        <input className="input-box" type="text" placeholder="Add Task" ref={this.input}></input>
+                    </form>
                     <div>
                         {this.state.todos.map((item, index) => {
                             return (
                                 <div
                                     className="items" key={item.id}>
-                                    <input type="checkbox" className="checkbox"></input>
 
+                                    <input type="checkbox" className="checkbox" checked={this.state.complete} onChange={this.toggleComplete}></input>
                                     <input className="current-value" name="text" onBlur={event => this.updateTodo(event.target.value, item.key)} defaultValue={item.value}></input>
-
 
 
                                     <button onClick={this.deleteTodo} className="delete-button" value="delete" data-key={index}>X</button>

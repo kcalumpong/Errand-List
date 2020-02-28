@@ -66,3 +66,7 @@ ul {
 .checkbox {
   margin-right: 10px;
 }
+
+.checkbox:checked + span { 
+  text-decoration:line-through
+}
