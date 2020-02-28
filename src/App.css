@@ -1,7 +1,68 @@
+.main-container {
+  margin-left: 10px;
+}
+
 .form-control {
   width: 30%;
 }
 
+h1 {
+  font-size: 32px;
+}
+
 ul {
   list-style: none;
+}
+
+.current-value {
+  border: hidden;  
+  width: 90%;
+  height: 100%
+}
+
+.current-value:focus {
+  outline: none;  
+}
+
+.input-box {
+  border: none;
+  margin-bottom: 25px;
+}
+
+.input-box:focus, .add-button:focus {
+  outline: none;
+}
+
+.input-box::placeholder {
+  color: rgb(185, 42, 42);
+}
+
+.add-button {
+  border: none;
+  color: rgb(185, 42, 42);
+  font-size: 18px;
+}
+
+.delete-button {
+  border: none;
+  position: absolute;
+  left: 325px;
+  color: rgb(36, 32, 32);
+  font-size: 14px;
+}
+
+.svg-inline--fa {
+  height: 2em;
+}
+
+.items {
+  color: rgb(48, 45, 45);
+  font-size: 18px;
+  margin-bottom: 15px;
+  border-bottom: 1px solid grey;
+  width: 350px;
+}
+
+.checkbox {
+  margin-right: 10px;
 }
