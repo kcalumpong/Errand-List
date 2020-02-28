@@ -9,7 +9,6 @@ class Todo extends Component {
         todos: [],
     }
 
-
     componentDidMount() {
         const todos = window.localStorage.getItem("todos");
         const parsedList = JSON.parse(todos);
@@ -48,7 +47,6 @@ class Todo extends Component {
     }
 
     taskCompleted = (complete, id, index) => {
-
         const todoItems = {
             id: id,
             value: this.input.current.value,
@@ -94,10 +92,6 @@ class Todo extends Component {
     }
 
     render() {
-        const divStyle = {
-            textDecoration: this.state.complete ? "line-through" : "", 
-            color: "blue",
-        };
 
         return (
             <div className="main-container">
@@ -119,7 +113,7 @@ class Todo extends Component {
                                     <input type="checkbox" id="checked" className="checkbox" onClick={() => this.taskCompleted(item.complete, item.id, index)}></input>
 
 
-                                    <input for="checked" style={divStyle} className="current-value" name="text" onBlur={event => this.updateTodo(event.target.value, item.id, index)} defaultValue={item.value} />
+                                    <input for="checked" style={{textDecoration: item.complete ? "line-through" : ""}} className="current-value" name="text" onBlur={event => this.updateTodo(event.target.value, item.id, index)} defaultValue={item.value} />
 
 
                                     <button onClick={this.deleteTodo} className="delete-button" value="delete" data-key={index}>X</button>
