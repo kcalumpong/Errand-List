@@ -43,7 +43,7 @@ ul {
   font-size: 18px;
 }
 
-.delete-button {
+.delete-button, .child-button {
   border: none;
   position: absolute;
   left: 325px;
@@ -52,11 +52,7 @@ ul {
 }
 
 .child-button {
-  border: none;
-  position: absolute;
   left: 298px;
-  color: rgb(36, 32, 32);
-  font-size: 14px;
 }
 
 .svg-inline--fa {
@@ -79,3 +75,18 @@ ul {
   text-decoration:line-through;
   color: rgb(109, 109, 32);
 }
+
+.child {
+  margin-left: 30px;
+  padding-bottom: 10px;
+}
+.childInput {
+  margin: 10px;
+  border: none;
+  /* border-top: 1px solid grey; */
+}
+
+.childInput:focus {
+  outline: none;
+}
+
