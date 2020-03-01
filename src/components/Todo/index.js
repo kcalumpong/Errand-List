@@ -126,8 +126,17 @@ class Todo extends Component {
         localStorage.setItem("todos", JSON.stringify(todoValue))
     }
 
-    deleteChildTodo = () => {
-        // need to add function
+    deleteChild = (index, childIndex) => {
+
+        console.log(childIndex)
+
+        let todo = JSON.parse(localStorage.getItem("todos"));
+        // console.log(childValue)
+        todo[index].children.splice(childIndex, 1)
+        this.setState({
+            todos: todo
+        });
+        localStorage.setItem("todos", JSON.stringify(todo))
     }
 
     render() {
@@ -153,6 +162,7 @@ class Todo extends Component {
                                             <div className="child" key={child.id}>
                                                 <input type="checkbox" id="checked" checked={child.complete} className="checkbox" onChange={() => this.childTaskCompleted(child.complete, index, childIndex)} />
                                                 <input style={{ textDecoration: child.complete ? "line-through" : "" }} className="childInput" id={child.id} onBlur={event => this.updateChild(event.target.value, index, childIndex)} data-key={childIndex} defaultValue={child.value} />
+                                                <button onClick={this.deleteChild.bind(this, index, childIndex)} className="delete-button" value="delete" data-key={childIndex}>X</button>
                                             </div>
                                         )
                                     }
