@@ -52,7 +52,6 @@ class Todo extends Component {
             value: this.input.current.value,
             complete: false,
         }
-
         if (localStorage.getItem("todos") === null) {
             const todos = []
             todos[0].children.push(child);
@@ -70,7 +69,6 @@ class Todo extends Component {
     updateTodo = (event, index) => {
         const todos = JSON.parse(localStorage.getItem("todos"))
         const updatedTodo = event
-
         todos[index].value = updatedTodo
         localStorage.setItem("todos", JSON.stringify(todos))
         this.setState({
@@ -81,13 +79,11 @@ class Todo extends Component {
     updateChild = (event, index, childIndex) => {
         const todos = JSON.parse(localStorage.getItem("todos"))
         const updatedChildTodo = event
-
         const childItems = {
             id: todos[index].children[childIndex].id,
             value: updatedChildTodo,
             complete: false
         }
-
         todos[index].children[childIndex] = childItems;
         localStorage.setItem("todos", JSON.stringify(todos))
         this.setState({
@@ -99,11 +95,9 @@ class Todo extends Component {
 
         const todos = JSON.parse(localStorage.getItem("todos"))
         todos[index].complete = !complete;
- 
-        if (todos[index].complete === true) {
-            todos[index].children[0].complete = true;
-        }
-
+        // if (todos[index].complete === true) {
+        //     todos[index].children[0].complete = true;
+        // }
         localStorage.setItem("todos", JSON.stringify(todos))
         this.setState({
             todos: JSON.parse(localStorage.getItem("todos"))
@@ -117,10 +111,9 @@ class Todo extends Component {
         this.setState({
             todos: JSON.parse(localStorage.getItem("todos"))
         })
-
-        if (todos[index].children[childIndex].complete === true) {
-            todos[index].complete = true;
-        }
+        // if (todos[index].children[childIndex].complete === true) {
+        //     todos[index].complete = true;
+        // }
         localStorage.setItem("todos", JSON.stringify(todos))
         this.setState({
             todos: JSON.parse(localStorage.getItem("todos"))
@@ -139,9 +132,6 @@ class Todo extends Component {
     }
 
     deleteChild = (index, childIndex) => {
-
-        console.log(childIndex)
-
         const todo = JSON.parse(localStorage.getItem("todos"));
         todo[index].children.splice(childIndex, 1)
         this.setState({
@@ -151,7 +141,6 @@ class Todo extends Component {
     }
 
     render() {
-        console.log(this.state)
         return (
             <div className="main-container">
                 <h1>Errand List</h1>
@@ -164,7 +153,7 @@ class Todo extends Component {
                         {this.state.todos.map((item, index) => {
                             return (
                                 <div
-                                className="items" key={item.id}>
+                                    className="items" key={item.id}>
                                     <input type="checkbox" id="checked" checked={item.complete} className="checkbox" onChange={() => this.taskCompleted(item.complete, index)} />
                                     <input style={{ textDecoration: item.complete ? "line-through" : "" }} className="current-value" name="text" id={item.id} onBlur={event => this.updateTodo(event.target.value, index)} defaultValue={item.value} />
                                     <button onClick={this.addChild.bind(this, index)} className="child-button">+ ADD</button>
@@ -179,13 +168,13 @@ class Todo extends Component {
                                         )
                                     }
                                     )}
-                                    </div>
+                                </div>
                             )
                         })
                         }
                     </div>
                 </div>
-                </div>
+            </div>
         )
     }
 }

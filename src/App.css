@@ -24,7 +24,7 @@ ul {
   margin-bottom: 25px;
 }
 
-.input-box:focus, .add-button:focus, .current-value:focus, .childInput:focus  {
+.input-box:focus, .add-button:focus, .current-value:focus, .childInput:focus, .delete-button:focus, .child-button:focus  {
   outline: none;
 }
 
