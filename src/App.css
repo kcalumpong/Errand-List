@@ -2,10 +2,6 @@
   margin-left: 10px;
 }
 
-.form-control {
-  width: 30%;
-}
-
 h1 {
   font-size: 32px;
 }
@@ -14,14 +10,13 @@ ul {
   list-style: none;
 }
 
+/* Inputs */
+
 .current-value {
   border: hidden;  
   width: 90%;
-  height: 100%
-}
-
-.current-value:focus {
-  outline: none;  
+  height: 100%;
+  font-size: 18px;
 }
 
 .input-box {
@@ -29,7 +24,7 @@ ul {
   margin-bottom: 25px;
 }
 
-.input-box:focus, .add-button:focus {
+.input-box:focus, .add-button:focus, .current-value:focus, .childInput:focus  {
   outline: none;
 }
 
@@ -37,34 +32,35 @@ ul {
   color: rgb(185, 42, 42);
 }
 
+/* Checkboxes and Buttons */
+
 .add-button {
   border: none;
   color: rgb(185, 42, 42);
   font-size: 18px;
 }
 
-.delete-button, .child-button {
+.delete-button, .delete-child-button, .child-button {
   border: none;
   position: absolute;
-  left: 325px;
   color: rgb(36, 32, 32);
   font-size: 14px;
 }
 
+.delete-button {
+  left: 444px;
+  color: blue;
+}
+
+.delete-child-button {
+  margin-top: 18px;
+  left: 480px;
+}
+
 .child-button {
-  left: 298px;
-}
-
-.svg-inline--fa {
-  height: 2em;
-}
-
-.items {
-  color: rgb(48, 45, 45);
-  font-size: 18px;
-  margin-bottom: 15px;
-  border-bottom: 1px solid grey;
-  width: 350px;
+  left: 389px;
+  font-size: 14px;
+  color: rgb(185, 42, 42);
 }
 
 .checkbox {
@@ -73,20 +69,30 @@ ul {
 
 .checkbox:checked { 
   text-decoration:line-through;
-  color: rgb(109, 109, 32);
+}
+
+/* Todo and Subtodo */
+
+.items {
+  color: rgb(48, 45, 45);
+  font-size: 18px;
+  margin-bottom: 15px;
+  border-bottom: 1px solid rgb(218, 210, 210);
+  width: 500px;
 }
 
 .child {
   margin-left: 30px;
-  padding-bottom: 10px;
-}
-.childInput {
-  margin: 10px;
-  border: none;
-  /* border-top: 1px solid grey; */
 }
 
-.childInput:focus {
-  outline: none;
+.childInput {
+  margin-top: 15px;
+  border: none;
+  border-bottom: 1px solid rgb(218, 210, 210);
+  width: 444px;
+}
+
+.child:nth-last-child(1) {
+  margin-bottom: 35px;
 }
 

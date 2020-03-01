@@ -69,7 +69,7 @@ class Todo extends Component {
 
     updateTodo = (event, index) => {
         const todos = JSON.parse(localStorage.getItem("todos"))
-        let updatedTodo = event
+        const updatedTodo = event
 
         todos[index].value = updatedTodo
         localStorage.setItem("todos", JSON.stringify(todos))
@@ -99,12 +99,7 @@ class Todo extends Component {
 
         const todos = JSON.parse(localStorage.getItem("todos"))
         todos[index].complete = !complete;
-        localStorage.setItem("todos", JSON.stringify(todos))
-        this.setState({
-            todos: JSON.parse(localStorage.getItem("todos"))
-        })
-
-
+ 
         if (todos[index].complete === true) {
             todos[index].children[0].complete = true;
         }
@@ -134,8 +129,8 @@ class Todo extends Component {
 
 
     deleteTodo = (event) => {
-        let index = event.target.getAttribute("data-key")
-        let todoValue = JSON.parse(localStorage.getItem("todos"));
+        const index = event.target.getAttribute("data-key")
+        const todoValue = JSON.parse(localStorage.getItem("todos"));
         todoValue.splice(index, 1)
         this.setState({
             todos: todoValue
@@ -147,7 +142,7 @@ class Todo extends Component {
 
         console.log(childIndex)
 
-        let todo = JSON.parse(localStorage.getItem("todos"));
+        const todo = JSON.parse(localStorage.getItem("todos"));
         todo[index].children.splice(childIndex, 1)
         this.setState({
             todos: todo
@@ -169,28 +164,28 @@ class Todo extends Component {
                         {this.state.todos.map((item, index) => {
                             return (
                                 <div
-                                    className="items" key={item.id}>
+                                className="items" key={item.id}>
                                     <input type="checkbox" id="checked" checked={item.complete} className="checkbox" onChange={() => this.taskCompleted(item.complete, index)} />
                                     <input style={{ textDecoration: item.complete ? "line-through" : "" }} className="current-value" name="text" id={item.id} onBlur={event => this.updateTodo(event.target.value, index)} defaultValue={item.value} />
-                                    <button onClick={this.addChild.bind(this, index)} className="child-button">+</button>
-                                    <button onClick={this.deleteTodo} className="delete-button" value="delete" data-key={index}>X</button>
+                                    <button onClick={this.addChild.bind(this, index)} className="child-button">+ ADD</button>
+                                    <button onClick={this.deleteTodo} className="delete-button" value="delete" data-key={index}>DELETE</button>
                                     {item.children.map((child, childIndex) => {
                                         return (
                                             <div className="child" key={child.id}>
-                                                <input type="checkbox" id="checked" checked={child.complete} className="checkbox" onChange={() => this.childTaskCompleted(child.complete, index, childIndex)} />
+                                                <label><input type="checkbox" id="checked" checked={child.complete} className="checkbox" onChange={() => this.childTaskCompleted(child.complete, index, childIndex)} /></label>
                                                 <input style={{ textDecoration: child.complete ? "line-through" : "" }} className="childInput" id={child.id} onBlur={event => this.updateChild(event.target.value, index, childIndex)} data-key={childIndex} defaultValue={child.value} />
-                                                <button onClick={this.deleteChild.bind(this, index, childIndex)} className="delete-button" value="delete" data-key={childIndex}>X</button>
+                                                <button onClick={this.deleteChild.bind(this, index, childIndex)} className="delete-child-button" value="delete" data-key={childIndex}>X</button>
                                             </div>
                                         )
                                     }
                                     )}
-                                </div>
+                                    </div>
                             )
                         })
                         }
                     </div>
                 </div>
-            </div>
+                </div>
         )
     }
 }
