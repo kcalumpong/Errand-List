@@ -95,9 +95,7 @@ class Todo extends Component {
 
         const todos = JSON.parse(localStorage.getItem("todos"))
         todos[index].complete = !complete;
-        // if (todos[index].complete === true) {
-        //     todos[index].children[0].complete = true;
-        // }
+        todos[index].children.forEach(child => child.complete =todos[index].complete)
         localStorage.setItem("todos", JSON.stringify(todos))
         this.setState({
             todos: JSON.parse(localStorage.getItem("todos"))
@@ -111,9 +109,12 @@ class Todo extends Component {
         this.setState({
             todos: JSON.parse(localStorage.getItem("todos"))
         })
-        // if (todos[index].children[childIndex].complete === true) {
-        //     todos[index].complete = true;
-        // }
+
+        if (todos[index].children.every(child => child.complete === true)) {
+            todos[index].complete = true
+       } else {
+            todos[index].complete = false
+       }
         localStorage.setItem("todos", JSON.stringify(todos))
         this.setState({
             todos: JSON.parse(localStorage.getItem("todos"))

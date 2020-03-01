@@ -22,12 +22,4 @@ The Errand List is a todo app where you can keep all your errands and todos orga
 [Heroku](https://errand-list.herokuapp.com)
 
 
-## FUTURE DEVELOPMENTS:
 
-Given the time constraints the following were not completed:
-
-* If a parent task is marked as completed, all sub-task should automatically be marked as completed. On line 98-100 you can see where I commented out part of the function I was beginning to write. It's currently only marking off index 0 of the parent's child. I need to be able to check if there is more than one child and complete them as well.
-
-* If all child tasks of a parent are marked as completed, the parent should automatically be marked as complete. On line 114-116 you can see my code again commented out. It's currently completing the parent task when checked off by one child, but if there is more than one child, it's not checking if they are completed. 
-
-* Collapsible Children Tasks
