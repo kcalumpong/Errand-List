@@ -24,12 +24,36 @@ class Todo extends Component {
         this.refs.form.reset();
     }
 
+    hide = (event) => {
+        event.style.display = 'none'
+    }
+
+    show = (event) => {
+        event.style.display = 'block'
+    }
+
+    expand = (index) => {
+
+         if (this.state.todos[index].children  === true) {
+             document.getElementById("expand-button").hide();
+             alert("hey")
+            } 
+        //     else {
+        //         document.getElementById("expand-button").show();
+        // }
+             
+        this.setState(prevState => ({
+            expanded: !prevState.expanded
+        }))
+}
+
     addTodo = () => {
         console.log(this.state)
         const todoItems = {
             id: shortid.generate(),
             value: this.input.current.value,
             complete: false,
+            expanded: false,
             children: []
         };
         if (localStorage.getItem("todos") === null) {
@@ -142,6 +166,7 @@ class Todo extends Component {
     }
 
     render() {
+        console.log(this.state)
         return (
             <div className="main-container">
                 <h1>Errand List</h1>
@@ -155,17 +180,22 @@ class Todo extends Component {
                             return (
                                 <div
                                     className="items" key={item.id}>
+                                    <button type="button" id="expand-button" className="collapsible" onClick={() => this.expand(index)}>v</button>
                                     <input type="checkbox" id="checked" checked={item.complete} className="checkbox" onChange={() => this.taskCompleted(item.complete, index)} />
                                     <input style={{ textDecoration: item.complete ? "line-through" : "" }} className="current-value" name="text" id={item.id} onBlur={event => this.updateTodo(event.target.value, index)} defaultValue={item.value} />
                                     <button onClick={this.addChild.bind(this, index)} className="child-button">+ ADD</button>
                                     <button onClick={this.deleteTodo} className="delete-button" value="delete" data-key={index}>DELETE</button>
                                     {item.children.map((child, childIndex) => {
                                         return (
-                                            <div className="child" key={child.id}>
+                                            <div key={child.id} className="child ">
+                                            <div key={child.id} className={`child-content${this.state.expanded ? " expanded" : ""}`}>
                                                 <label><input type="checkbox" id="checked" checked={child.complete} className="checkbox" onChange={() => this.childTaskCompleted(child.complete, index, childIndex)} /></label>
                                                 <input style={{ textDecoration: child.complete ? "line-through" : "" }} className="childInput" id={child.id} onBlur={event => this.updateChild(event.target.value, index, childIndex)} data-key={childIndex} defaultValue={child.value} />
+                                                </div>
                                                 <button onClick={this.deleteChild.bind(this, index, childIndex)} className="delete-child-button" value="delete" data-key={childIndex}>X</button>
                                             </div>
+                                           
+                                            
                                         )
                                     }
                                     )}

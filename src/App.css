@@ -1,5 +1,5 @@
 .main-container {
-  margin-left: 10px;
+  margin-left: 20px;
 }
 
 h1 {
@@ -70,6 +70,23 @@ ul {
 .checkbox:checked { 
   text-decoration:line-through;
 }
+
+/* .collapsible {
+  padding: 15px;
+} */
+
+.child-content {
+  max-height: 0px;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+}
+
+.child-content.expanded {
+  max-height: unset;
+  overflow: auto;
+}
+
+
 
 /* Todo and Subtodo */
 
