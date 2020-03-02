@@ -40,6 +40,10 @@ ul {
   font-size: 18px;
 }
 
+#expand-button {
+  visibility: hidden;
+} 
+
 .delete-button, .delete-child-button, .child-button {
   border: none;
   position: absolute;
@@ -72,18 +76,14 @@ ul {
 }
 
 .child-content {
-  max-height: 0px;
   overflow: hidden;
   transition: max-height 0.2s ease-out;
+  max-height: 0px;
 }
 
 .child-content.expanded {
   max-height: unset;
   overflow: auto;
-}
-
-.child {
-  width: 100%;
 }
 
 
@@ -100,6 +100,7 @@ ul {
 
 .child {
   margin-left: 30px;
+  /* margin-bottom: -20px; */
 }
 
 .childInput {
