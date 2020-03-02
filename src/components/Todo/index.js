@@ -32,20 +32,21 @@ class Todo extends Component {
         event.style.display = 'block'
     }
 
-    expand = (index) => {
+    expand = (index, expanded) => {
 
-         if (this.state.todos[index].children  === true) {
-             document.getElementById("expand-button").hide();
-             alert("hey")
-            } 
-        //     else {
-        //         document.getElementById("expand-button").show();
-        // }
-             
-        this.setState(prevState => ({
-            expanded: !prevState.expanded
-        }))
-}
+        //  if (this.state.todos[index].children  === false) {
+        //     //  document.getElementById("expand-button");
+        //      alert("hey")
+        //     } 
+
+
+        const todos = JSON.parse(localStorage.getItem("todos"))
+        todos[index].expanded = !expanded;
+        localStorage.setItem("todos", JSON.stringify(todos))
+        this.setState({
+            todos: JSON.parse(localStorage.getItem("todos"))
+        })
+    }
 
     addTodo = () => {
         console.log(this.state)
@@ -119,7 +120,7 @@ class Todo extends Component {
 
         const todos = JSON.parse(localStorage.getItem("todos"))
         todos[index].complete = !complete;
-        todos[index].children.forEach(child => child.complete =todos[index].complete)
+        todos[index].children.forEach(child => child.complete = todos[index].complete)
         localStorage.setItem("todos", JSON.stringify(todos))
         this.setState({
             todos: JSON.parse(localStorage.getItem("todos"))
@@ -136,15 +137,14 @@ class Todo extends Component {
 
         if (todos[index].children.every(child => child.complete === true)) {
             todos[index].complete = true
-       } else {
+        } else {
             todos[index].complete = false
-       }
+        }
         localStorage.setItem("todos", JSON.stringify(todos))
         this.setState({
             todos: JSON.parse(localStorage.getItem("todos"))
         })
-    };
-
+    }
 
     deleteTodo = (event) => {
         const index = event.target.getAttribute("data-key")
@@ -180,22 +180,22 @@ class Todo extends Component {
                             return (
                                 <div
                                     className="items" key={item.id}>
-                                    <button type="button" id="expand-button" className="collapsible" onClick={() => this.expand(index)}>v</button>
+                                    <button type="button" id="expand-button" className="collapsible" onClick={() => this.expand(index, item.expanded)}>v</button>
                                     <input type="checkbox" id="checked" checked={item.complete} className="checkbox" onChange={() => this.taskCompleted(item.complete, index)} />
                                     <input style={{ textDecoration: item.complete ? "line-through" : "" }} className="current-value" name="text" id={item.id} onBlur={event => this.updateTodo(event.target.value, index)} defaultValue={item.value} />
                                     <button onClick={this.addChild.bind(this, index)} className="child-button">+ ADD</button>
                                     <button onClick={this.deleteTodo} className="delete-button" value="delete" data-key={index}>DELETE</button>
                                     {item.children.map((child, childIndex) => {
                                         return (
-                                            <div key={child.id} className="child ">
-                                            <div key={child.id} className={`child-content${this.state.expanded ? " expanded" : ""}`}>
-                                                <label><input type="checkbox" id="checked" checked={child.complete} className="checkbox" onChange={() => this.childTaskCompleted(child.complete, index, childIndex)} /></label>
-                                                <input style={{ textDecoration: child.complete ? "line-through" : "" }} className="childInput" id={child.id} onBlur={event => this.updateChild(event.target.value, index, childIndex)} data-key={childIndex} defaultValue={child.value} />
-                                                </div>
-                                                <button onClick={this.deleteChild.bind(this, index, childIndex)} className="delete-child-button" value="delete" data-key={childIndex}>X</button>
+                                            <div key={child.id} className="child">
+                                                <div className={`child-content${this.state.expanded ? " expanded" : ""}`}>
+
+                                                    <label><input type="checkbox" id="checked" checked={child.complete} className="checkbox" onChange={() => this.childTaskCompleted(child.complete, index, childIndex)} /></label>
                                             </div>
-                                           
-                                            
+                                                    <input style={{ textDecoration: child.complete ? "line-through" : "" }} className="childInput" id={child.id} onBlur={event => this.updateChild(event.target.value, index, childIndex)} data-key={childIndex} defaultValue={child.value} />
+                                                    <button onClick={this.deleteChild.bind(this, index, childIndex)} className="delete-child-button" value="delete" data-key={childIndex}>X</button>
+                                                </div>
+
                                         )
                                     }
                                     )}

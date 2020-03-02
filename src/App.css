@@ -71,10 +71,6 @@ ul {
   text-decoration:line-through;
 }
 
-/* .collapsible {
-  padding: 15px;
-} */
-
 .child-content {
   max-height: 0px;
   overflow: hidden;
@@ -84,6 +80,10 @@ ul {
 .child-content.expanded {
   max-height: unset;
   overflow: auto;
+}
+
+.child {
+  width: 100%;
 }
 
 
