@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import shortid from 'shortid';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
 class Todo extends Component {
 
@@ -24,22 +26,7 @@ class Todo extends Component {
         this.refs.form.reset();
     }
 
-    hide = (event) => {
-        event.style.display = 'none'
-    }
-
-    show = (event) => {
-        event.style.display = 'block'
-    }
-
     expand = (index, expanded) => {
-
-        //  if (this.state.todos[index].children  === false) {
-        //     //  document.getElementById("expand-button");
-        //      alert("hey")
-        //     } 
-        // const index = event.target.getAttribute("data-key")
-
         const todos = JSON.parse(localStorage.getItem("todos"))
         todos[index].expanded = !expanded;
         localStorage.setItem("todos", JSON.stringify(todos))
@@ -49,12 +36,11 @@ class Todo extends Component {
     }
 
     addTodo = () => {
-        console.log(this.state)
         const todoItems = {
             id: shortid.generate(),
             value: this.input.current.value,
             complete: false,
-            expanded: false,
+            expanded: true,
             children: []
         };
         if (localStorage.getItem("todos") === null) {
@@ -117,7 +103,6 @@ class Todo extends Component {
     }
 
     taskCompleted = (complete, index) => {
-
         const todos = JSON.parse(localStorage.getItem("todos"))
         todos[index].complete = !complete;
         todos[index].children.forEach(child => child.complete = todos[index].complete)
@@ -134,7 +119,6 @@ class Todo extends Component {
         this.setState({
             todos: JSON.parse(localStorage.getItem("todos"))
         })
-
         if (todos[index].children.every(child => child.complete === true)) {
             todos[index].complete = true
         } else {
@@ -179,31 +163,29 @@ class Todo extends Component {
                         {this.state.todos.map((item, index) => {
                             return (
                                 <div className="items" key={item.id}>
-                                    <button type="button" id="expand-button" className="collapsible" data-key={index} onClick={() => this.expand(index, item.expanded)}>v</button>
                                     <input type="checkbox" id="checked" checked={item.complete} className="checkbox" onChange={() => this.taskCompleted(item.complete, index)} />
+                                    <FontAwesomeIcon icon={faChevronRight} size="xs" style={{ transform: item.expanded ? "rotate(90deg)" : "" }} type="button" id="expand-button" className="collapsible" data-key={index} onClick={() => this.expand(index, item.expanded)} />
                                     <input style={{ textDecoration: item.complete ? "line-through" : "" }} className="current-value" name="text" id={item.id} onBlur={event => this.updateTodo(event.target.value, index)} defaultValue={item.value} />
                                     <button onClick={this.addChild.bind(this, index)} className="child-button">+ ADD</button>
                                     <button onClick={this.deleteTodo} className="delete-button" value="delete" data-key={index}>DELETE</button>
                                     {item.children.map((child, childIndex) => {
                                         return (
-                                                <div className={`child-content${this.state.todos[index].expanded ? " expanded" : ""}`}>
-                                            <div key={child.id} className="child">
-                                                <input type="checkbox" id="checked" checked={child.complete} className="checkbox" onChange={() => this.childTaskCompleted(child.complete, index, childIndex)} />
-                                                <input style={{ textDecoration: child.complete ? "line-through" : "" }} className="childInput" id={child.id} onBlur={event => this.updateChild(event.target.value, index, childIndex)} data-key={childIndex} defaultValue={child.value} />
-                                                <button onClick={this.deleteChild.bind(this, index, childIndex)} className="delete-child-button" value="delete" data-key={childIndex}>X</button>
+                                            <div className={`child-content${this.state.todos[index].expanded ? " expanded" : ""}`}>
+                                                <div key={child.id} className="child">
+                                                    <input type="checkbox" id="checked" checked={child.complete} className="checkbox" onChange={() => this.childTaskCompleted(child.complete, index, childIndex)} />
+                                                    <input style={{ textDecoration: child.complete ? "line-through" : "" }} className="childInput" id={child.id} onBlur={event => this.updateChild(event.target.value, index, childIndex)} data-key={childIndex} defaultValue={child.value} />
+                                                    <button onClick={this.deleteChild.bind(this, index, childIndex)} className="delete-child-button" value="delete" data-key={childIndex}>X</button>
                                                 </div>
                                             </div>
-                                        )
-                                    }
+                                        )}
                                     )}
                                 </div>
-                            )
-                        })
-                        }
+                            )})}
                     </div>
                 </div>
             </div>
         )
     }
 }
+
 export default Todo;

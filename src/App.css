@@ -17,6 +17,7 @@ ul {
   width: 90%;
   height: 100%;
   font-size: 18px;
+  margin-bottom: 5px;
 }
 
 .input-box {
@@ -24,7 +25,7 @@ ul {
   margin-bottom: 25px;
 }
 
-.input-box:focus, .add-button:focus, .current-value:focus, .childInput:focus, .delete-button:focus, .child-button:focus  {
+.input-box:focus, .add-button:focus, .current-value:focus, .childInput:focus, .delete-button:focus, .child-button:focus, #expand-button  {
   outline: none;
 }
 
@@ -34,15 +35,16 @@ ul {
 
 /* Checkboxes and Buttons */
 
+#expand-button {
+  border: none;
+  margin-right: 5px;
+}
+
 .add-button {
   border: none;
   color: rgb(185, 42, 42);
   font-size: 18px;
 }
-
-#expand-button {
-  visibility: hidden;
-} 
 
 .delete-button, .delete-child-button, .child-button {
   border: none;
@@ -79,14 +81,14 @@ ul {
   overflow: hidden;
   transition: max-height 0.2s ease-out;
   max-height: 0px;
+  visibility: hidden;
 }
 
 .child-content.expanded {
   max-height: unset;
   overflow: auto;
+  visibility: visible;
 }
-
-
 
 /* Todo and Subtodo */
 
@@ -100,7 +102,6 @@ ul {
 
 .child {
   margin-left: 30px;
-  /* margin-bottom: -20px; */
 }
 
 .childInput {
@@ -111,6 +112,5 @@ ul {
 }
 
 .child:nth-last-child(1) {
-  margin-bottom: 35px;
+  margin-bottom: 25px;
 }
-
